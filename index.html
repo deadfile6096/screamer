@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dark House</title>
+    <link rel="icon" href="favicon/favicon.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Эффекты перехода -->
+    <div class="screen-flash"></div>
+    <div class="blood-drips"></div>
+    
+    <!-- Аудио элементы -->
+    <audio id="welcome-background-audio" loop preload="auto" autoplay muted>
+        <source src="audio/welcome-background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="welcome-transition-audio" preload="auto">
+        <source src="audio/welcome_переход.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- VHS эффекты -->
+    <div class="vhs-effect">
+        <div class="vhs-noise"></div>
+        <div class="vhs-scanlines"></div>
+        <div class="vhs-distortion"></div>
+        <div class="vhs-glitch"></div>
+        <div class="vhs-rgb-shift"></div>
+    </div>
+    
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="active">
+        <div class="welcome-background"></div>
+        <!-- Twitter логотип в левом углу -->
+        <div class="twitter-welcome-corner">
+            <a href="https://x.com" target="_blank">
+                <img src="img/twitter.png" alt="X (Twitter)" class="twitter-logo">
+            </a>
+        </div>
+        <!-- Декоративные изображения по бокам и снизу -->
+        <div class="pin pin-left-top">
+            <img src="img/pin/111.jpg" alt="">
+        </div>
+        <div class="pin pin-right-top">
+            <img src="img/pin/222.png" alt="">
+        </div>
+        <div class="pin pin-left-bottom">
+            <img src="img/pin/333.png" alt="">
+        </div>
+        <div class="pin pin-right-bottom">
+            <img src="img/pin/444.png" alt="">
+        </div>
+        
+        <div class="welcome-content">
+            <div class="eye-video-container">
+                <video id="eye-video" autoplay loop muted playsinline disablepictureinpicture controlslist="nodownload" oncontextmenu="return false;">
+                    <source src="img/eye-logo.mp4" type="video/mp4">
+                </video>
+            </div>
+            <h1 id="typing-title"></h1>
+            <h2 id="fade-subtitle">Look closer... I can see you.</h2>
+            <div class="scroll-indicator">
+                <div class="arrow-down"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="game">
+        <!-- Фоновое видео -->
+        <video id="background-video" autoplay loop muted playsinline>
+            <source src="img/video/background.mp4" type="video/mp4">
+        </video>
+        <div id="flashlight"></div>
+        <div id="content" class="centered-content">
+            <!-- Step 1: Awakening -->
+            <div class="step" id="step1">
+                <p class="fade-in">You open your eyes.</p>
+                <p class="fade-in delay-1">It smells of dust and decay.</p>
+                <p class="fade-in delay-2">Moonlight breaks through broken boards.</p>
+                <p class="fade-in delay-3">In the corner — a door. On the floor — a shattered mirror.</p>
+                
+                <div class="choices fade-in delay-4">
+                    <button class="choice correct" data-target="step2">Approach the door</button>
+                    <button class="choice wrong">Look in the mirror</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Corridor -->
+            <div class="step" id="step2">
+                <p class="fade-in">You enter the corridor.</p>
+                <p class="fade-in delay-1">The floor creaks beneath your feet.</p>
+                <p class="fade-in delay-2">A dim lamp flickers on the wall.</p>
+                <p class="fade-in delay-3">To the left — stairs going up. To the right — a room with an open door.</p>
+                
+                <div class="choices fade-in delay-4">
+                    <button class="choice correct" data-target="step3">Enter the room</button>
+                    <button class="choice wrong">Go up the stairs</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Voice -->
+            <div class="step" id="step3">
+                <p class="fade-in">The room is empty.</p>
+                <p class="fade-in delay-1">A radio stands in the corner.</p>
+                <p class="fade-in delay-2">It turns on by itself and whispers:</p>
+                <p class="fade-in delay-3">"He's still here..."</p>
+                
+                <div class="choices fade-in delay-4">
+                    <button class="choice wrong">Turn off the radio</button>
+                    <button class="choice correct" data-target="step4">Listen carefully</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Exit -->
+            <div class="step" id="step4">
+                <p class="fade-in">You find a secret door in the wall.</p>
+                <p class="fade-in delay-1">It's covered with strange symbols.</p>
+                <p class="fade-in delay-2">Nearby — a broken window.</p>
+                <p class="fade-in delay-3">You feel someone watching you...</p>
+                
+                <div class="choices fade-in delay-4">
+                    <button class="choice wrong">Climb through the window</button>
+                    <button class="choice correct" data-target="victory">Open the door</button>
+                </div>
+            </div>
+            
+            <!-- Victory -->
+            <div class="step" id="victory">
+                <p class="fade-in victory-text">Today you were smarter than the darkness.</p>
+                <p class="fade-in delay-1 victory-text">But it's still watching...</p>
+                
+                <div class="share-container fade-in delay-3">
+                    <a href="https://x.com" target="_blank" class="twitter-link">
+                        <img src="img/twitter.png" alt="X (Twitter)" class="twitter-logo">
+                    </a>
+                </div>
+                
+                <div class="restart-container fade-in delay-4">
+                    <button id="restart-button">Try Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Jumpscare overlay -->
+    <div id="jumpscare">
+        <img src="screamers/screamer.png" alt="Jumpscare">
+    </div>
+    
+    <audio id="scream-sound" src="screamers/screamer.mp3" preload="auto"></audio>
+    
+    <script src="script.js"></script>
+    
+    <!-- Image Preloader -->
+    <div style="display: none;">
+        <img src="img/background-bg.jpg" alt="Preload Background">
+    </div>
+</body>
+</html>

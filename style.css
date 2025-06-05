@@ -1,0 +1,1034 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
+/* Welcome Screen Styles */
+#welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: none;
+}
+
+#welcome-screen.active {
+    display: flex;
+}
+
+/* Стили для игрового контента */
+#game {
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    color: #ccc;
+    font-family: 'Courier Prime', monospace;
+    overflow: hidden;
+}
+
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+    filter: brightness(1.5);
+}
+
+#game.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/background-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.15);
+    z-index: -1;
+}
+
+.welcome-content {
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    margin: 0 auto; /* Центрирование по горизонтали */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Центрирование по вертикали и горизонтали */
+}
+
+.eye-video-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(150, 0, 0, 0.5);
+    opacity: 0.8;
+}
+
+#eye-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.2) saturate(0.8) hue-rotate(-10deg);
+    pointer-events: none; /* Отключаем взаимодействие с видео */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Запрещаем выделение */
+}
+
+/* Пульсирующий эффект для видео */
+.eye-video-container {
+    animation: pulse-eye 4s infinite;
+}
+
+@keyframes pulse-eye {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(150, 0, 0, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(150, 0, 0, 0.7);
+    }
+}
+
+/* Highlight text when cursor is near */
+.welcome-content:hover #typing-title,
+.welcome-content:hover #fade-subtitle,
+.welcome-content.highlight-text #typing-title,
+.welcome-content.highlight-text #fade-subtitle {
+    color: rgba(180, 0, 0, 0.5);
+    text-shadow: 0 0 15px rgba(180, 0, 0, 0.4),
+                0 0 25px rgba(100, 0, 0, 0.3);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    /* Эффект кровавого текста */
+    animation: bloodDrip 8s infinite;
+}
+
+@keyframes bloodDrip {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(180, 0, 0, 0.4),
+                    0 0 10px rgba(100, 0, 0, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 5px rgba(180, 0, 0, 0.4),
+                    0 0 10px rgba(100, 0, 0, 0.3),
+                    0 3px 0 rgba(180, 0, 0, 0.7);
+    }
+    75% {
+        text-shadow: 0 0 5px rgba(180, 0, 0, 0.4),
+                    0 0 10px rgba(100, 0, 0, 0.3);
+    }
+}
+
+/* Эффект глитча для текста */
+.text-glitch {
+    animation: glitch 0.3s linear;
+    position: relative;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+/* Flashlight cursor effect */
+#welcome-screen::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(50, 0, 0, 0.15);
+    box-shadow: 0 0 30px 20px rgba(80, 0, 0, 0.25),
+                0 0 60px 30px rgba(50, 0, 0, 0.15),
+                0 0 90px 40px rgba(30, 0, 0, 0.1),
+                0 0 120px 60px rgba(20, 0, 0, 0.05);
+    transform: translate(-50%, -50%);
+    left: var(--cursor-x, 50%);
+    top: var(--cursor-y, 50%);
+    pointer-events: none;
+    z-index: 2;
+    transition: width 0.1s, height 0.1s;
+    filter: blur(3px);
+    mix-blend-mode: screen;
+}
+
+#typing-title {
+    font-size: 3.2rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(150, 0, 0, 0.3);
+    min-height: 4.5rem;
+    color: rgba(150, 0, 0, 0.01);
+    mix-blend-mode: difference;
+    letter-spacing: 2px;
+    font-weight: normal;
+    font-family: 'Creepster', cursive;
+    transform: rotate(-1deg);
+}
+
+#fade-subtitle {
+    font-size: 1.6rem;
+    margin-bottom: 4rem;
+    opacity: 0;
+    text-shadow: 0 0 8px rgba(150, 0, 0, 0.3);
+    color: rgba(150, 0, 0, 0.01);
+    mix-blend-mode: difference;
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-family: 'Shadows Into Light', cursive;
+    transform: rotate(0.5deg);
+}
+
+.scroll-indicator {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    animation: pulse 2s infinite;
+}
+
+.arrow-down {
+    width: 40px;
+    height: 40px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    transform: rotate(45deg);
+    opacity: 0.7;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Courier Prime', monospace;
+    background-color: #000;
+    color: #fff;
+    cursor: none;
+}
+
+#game {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#content {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+    z-index: 2;
+}
+
+.step {
+    display: none;
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Центрированный контент для игры */
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.step.active {
+    display: block;
+}
+
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.fade-in {
+    animation: fadeIn 2s forwards;
+}
+
+.delay-1 {
+    animation-delay: 1s;
+}
+
+.delay-2 {
+    animation-delay: 2s;
+}
+
+.delay-3 {
+    animation-delay: 3s;
+}
+
+.delay-4 {
+    animation-delay: 4s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.choices {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    opacity: 0;
+}
+
+.choice {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 12px 24px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.choice:hover {
+    border-color: #fff;
+    text-shadow: 0 0 8px #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.choice::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s ease;
+}
+
+.choice:hover::before {
+    left: 100%;
+}
+
+/* Стили для джампскера */
+#jumpscare {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease;
+}
+
+#jumpscare img {
+    max-width: 100%;
+    max-height: 100vh;
+    width: auto;
+    height: auto;
+    animation: jumpscare-pulse 0.3s infinite alternate;
+}
+
+@keyframes jumpscare-pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+/* Стили для логотипа Twitter (X) */
+.twitter-link {
+    display: inline-block;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.twitter-logo {
+    width: 50px;
+    height: 50px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    transition: all 0.3s ease;
+}
+
+.twitter-link:hover .twitter-logo {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+/* Стили для Twitter логотипа в левом углу экрана приветствия */
+.twitter-welcome-corner {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    opacity: 0.85;
+    transition: all 0.3s ease;
+    filter: brightness(1.2);
+}
+
+.twitter-welcome-corner:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.twitter-welcome-corner .twitter-logo {
+    width: 100px;
+    height: 100px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+}
+
+.share-container {
+    margin: 30px 0;
+    opacity: 0;
+}
+
+.victory-text {
+    font-size: 1.8rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+#flashlight {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle 150px at 50% 50%,
+        transparent 10%,
+        rgba(0, 0, 0, 0.85) 80%,
+        rgba(0, 0, 0, 0.95) 100%
+    );
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Custom cursor */
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.2s, height 0.2s;
+}
+
+/* Victory screen styles */
+.victory-text {
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.share-container {
+    margin-top: 3rem;
+    opacity: 0;
+}
+
+.share-button {
+    display: inline-block;
+    background: #1da1f2;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    background: #0d8ecf;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.restart-container {
+    margin-top: 2rem;
+    opacity: 0;
+}
+
+#restart-button {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 10px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#restart-button:hover {
+    border-color: #fff;
+    text-shadow: 0 0 8px #fff;
+}
+
+/* Стили для декоративных изображений */
+.pin {
+    position: absolute;
+    z-index: 2;
+    opacity: 0.05; /* Почти невидимые */
+    filter: grayscale(90%) brightness(0.3) contrast(0.8);
+    max-width: 150px;
+    transform: rotate(var(--rotate, 0deg));
+}
+
+.pin img {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Убираем анимацию при наведении */
+#welcome-screen:hover .pin {
+    opacity: 0.15; /* Слегка видны при наведении курсора */
+}
+
+/* Эффекты перехода */
+.transition-active .eye-container {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(6);
+    z-index: 9999;
+    transition: all 2.5s ease-in-out;
+    box-shadow: 0 0 50px 20px rgba(255, 0, 0, 0.7);
+    animation: eye-pulse 0.5s infinite alternate;
+}
+
+@keyframes eye-pulse {
+    0% { box-shadow: 0 0 50px 20px rgba(255, 0, 0, 0.7); }
+    100% { box-shadow: 0 0 70px 30px rgba(255, 0, 0, 0.9); }
+}
+
+.transition-active .pin {
+    opacity: 1 !important;
+    filter: none !important;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.7) !important;
+    z-index: 9998;
+    transition: all 0.5s ease-in;
+}
+
+/* Яркие блики экрана */
+.screen-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.screen-flash.active {
+    animation: screen-flash 0.5s ease-out;
+}
+
+@keyframes screen-flash {
+    0% { opacity: 0; }
+    10% { opacity: 0.8; }
+    20% { opacity: 0; }
+    30% { opacity: 0.6; }
+    40% { opacity: 0; }
+    50% { opacity: 0.4; }
+    60% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Подтёки крови */
+.blood-drips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: 10001;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.blood-drips.active {
+    opacity: 1;
+    height: 100%;
+    transition: opacity 0.3s ease-in;
+}
+
+.blood-drips.reverse {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.blood-drip {
+    position: absolute;
+    top: -50px;
+    background-color: #8a0303;
+    width: 30px;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: 0.8;
+}
+
+.blood-drip::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    background-color: #8a0303;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+}
+
+/* Эффекты старой VHS-камеры */
+
+/* Обертка для эффекта VHS */
+.vhs-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    overflow: hidden;
+}
+
+/* Шум и зернистость VHS */
+.vhs-noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/></filter><rect width="500" height="500" filter="url(%23noise)" opacity="0.15"/></svg>');
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: overlay;
+    animation: vhs-noise 0.2s steps(5) infinite;
+}
+
+@keyframes vhs-noise {
+    0%, 100% { opacity: 0.03; transform: translateY(0); }
+    10% { opacity: 0.04; transform: translateY(1px); }
+    20% { opacity: 0.03; transform: translateY(-1px); }
+    30% { opacity: 0.04; transform: translateY(0px); }
+    40% { opacity: 0.02; transform: translateY(-1px); }
+    50% { opacity: 0.03; transform: translateY(1px); }
+    60% { opacity: 0.04; transform: translateY(0px); }
+    70% { opacity: 0.02; transform: translateY(1px); }
+    80% { opacity: 0.03; transform: translateY(-1px); }
+    90% { opacity: 0.02; transform: translateY(0px); }
+}
+
+/* Горизонтальные помехи */
+.vhs-scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(0, 0, 0, 0.05) 51%
+    );
+    background-size: 100% 4px;
+    z-index: 9997;
+    opacity: 0.2;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+/* Вертикальные помехи */
+.vhs-distortion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 20%,
+        transparent 80%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 9996;
+    animation: vhs-distortion 8s linear infinite;
+}
+
+@keyframes vhs-distortion {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Периодические глитчи */
+.vhs-glitch {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9995;
+    background: rgba(255, 255, 255, 0.03);
+    animation: vhs-glitch 10s step-end infinite;
+}
+
+@keyframes vhs-glitch {
+    0%, 95%, 100% { opacity: 0; transform: translateX(0); }
+    9.5%, 9.6% { opacity: 1; transform: translateX(2px); }
+    9.7%, 9.8% { opacity: 0; transform: translateX(0); }
+    49.5%, 49.7% { opacity: 1; transform: translateX(-2px); }
+    49.8%, 50% { opacity: 0; transform: translateX(0); }
+    74.5%, 74.6% { opacity: 1; transform: translateX(1px); }
+    74.7%, 74.9% { opacity: 0; transform: translateX(0); }
+}
+
+/* Цветовое смещение RGB */
+.vhs-rgb-shift {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 9994;
+    opacity: 0.03;
+    background: linear-gradient(
+        to right,
+        rgba(255, 0, 0, 0.1),
+        transparent 30%,
+        transparent 70%,
+        rgba(0, 0, 255, 0.1)
+    );
+    animation: vhs-rgb-shift 5s ease-in-out infinite alternate;
+}
+
+@keyframes vhs-rgb-shift {
+    0% { transform: translateX(-5px); }
+    100% { transform: translateX(5px); }
+}
+
+.pin-left-top {
+    top: 10%;
+    left: 5%;
+    --rotate: -5deg;
+}
+
+.pin-right-top {
+    top: 15%;
+    right: 5%;
+    --rotate: 7deg;
+}
+
+.pin-left-bottom {
+    bottom: 10%;
+    left: 7%;
+    --rotate: 3deg;
+}
+
+.pin-right-bottom {
+    bottom: 12%;
+    right: 6%;
+    --rotate: -8deg;
+}
+
+/* Jumpscare styles */
+#jumpscare {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease;
+}
+
+#jumpscare img {
+    max-width: 90%;
+    max-height: 90%;
+    animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-5px, -5px) rotate(-1deg); }
+    50% { transform: translate(5px, 5px) rotate(1deg); }
+    75% { transform: translate(-3px, 3px) rotate(-0.5deg); }
+    100% { transform: translate(3px, -3px) rotate(0.5deg); }
+}
+
+/* Text glitch effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: 1px 0 blue;
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(20% 0 80% 0); }
+    20% { clip-path: inset(60% 0 40% 0); }
+    40% { clip-path: inset(40% 0 60% 0); }
+    60% { clip-path: inset(80% 0 20% 0); }
+    80% { clip-path: inset(10% 0 90% 0); }
+    100% { clip-path: inset(30% 0 70% 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(10% 0 90% 0); }
+    25% { clip-path: inset(30% 0 70% 0); }
+    50% { clip-path: inset(50% 0 50% 0); }
+    75% { clip-path: inset(70% 0 30% 0); }
+    100% { clip-path: inset(90% 0 10% 0); }
+}
+
+/* Flickering light effect */
+.flicker {
+    animation: flicker 5s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 0.95;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+    20%, 24%, 55% {
+        opacity: 0.5;
+        text-shadow: none;
+    }
+}
+
+/* Responsive design */
+
+/* Для больших мониторов (1920px и выше) */
+@media screen and (min-width: 1920px) {
+    .welcome-content {
+        max-width: 1000px;
+    }
+    
+    #typing-title {
+        font-size: 3.5rem;
+    }
+    
+    #fade-subtitle {
+        font-size: 2rem;
+    }
+    
+    .eye-video-container {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .step p {
+        font-size: 1.8rem;
+    }
+    
+    .choice {
+        font-size: 1.5rem;
+        padding: 15px 30px;
+    }
+}
+
+/* Для 4K мониторов (3840px и выше) */
+@media screen and (min-width: 3840px) {
+    .welcome-content {
+        max-width: 1400px;
+    }
+    
+    #typing-title {
+        font-size: 4.5rem;
+    }
+    
+    #fade-subtitle {
+        font-size: 2.5rem;
+    }
+    
+    .eye-video-container {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .step p {
+        font-size: 2.2rem;
+        max-width: 1200px;
+    }
+    
+    .choice {
+        font-size: 1.8rem;
+        padding: 18px 36px;
+    }
+    
+    /* Радиус эффекта фонарика теперь устанавливается динамически через JavaScript */
+    
+    #flashlight::after {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+/* Для ультрашироких мониторов (21:9 и шире) */
+@media screen and (min-aspect-ratio: 21/9) {
+    .welcome-background,
+    #background-video {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+    }
+    
+    .centered-content {
+        max-width: 70%;
+    }
+}
+
+/* Мобильные устройства (сохраняем для совместимости) */
+@media (max-width: 768px) {
+    p {
+        font-size: 1.2rem;
+    }
+    
+    .choices {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .choice {
+        width: 100%;
+    }
+}
